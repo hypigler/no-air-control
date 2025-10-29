@@ -25,7 +25,7 @@ public class AirControl
         
         // Replicate the original 'float strength' calculation
         // __instance.AirMovingStrength correctly accesses the property from the base PModuleInAir class.
-        float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * NoAirControlSystem.Config.AirControlStrength;
+        float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * NoAirControlSystem.Config.AirControlStrength;
 
         // 3. Apply the movement vector using the calculated strength (which is always the high strength)
         pos.Motion.Add(

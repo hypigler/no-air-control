@@ -47,11 +47,11 @@ public class NoAirControlSystem : ModSystem
         try
             {
                 // api.LoadModConfig<T> will save/load to the server's ModConfig folder
-                Config = api.LoadModConfig<ModConfig>("aircontrolmodconfig.json");
+                Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
                 if (Config == null)
                 {
                     Config = new ModConfig();
-                    api.StoreModConfig(Config, "aircontrolmodconfig.json");
+                    api.StoreModConfig(Config, "NoAirControl.json");
                 }
             }
             catch (System.Exception e)
