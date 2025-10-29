@@ -1,0 +1,10 @@
+{
+  "type": "code",
+  "modid": "no-air-control",
+  "name": "No Air Control",
+  "side": "universal",
+  "authors": [ "pigler" ],
+  "description": "Removes Air Control",
+  "version": "1.0.0",
+  "dependencies": { "game": "" }
+}

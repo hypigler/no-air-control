@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Client": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "\"/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory/Vintagestory.dll\" --tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"",
+      "workingDirectory": "/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory"
+    },
+    "Server": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "\"/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory/VintagestoryServer.dll\" --tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"",
+      "workingDirectory": "/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory"
+    }
+  }
+}
