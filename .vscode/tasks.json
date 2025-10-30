@@ -9,7 +9,7 @@
                 "build",
                 "-c",
                 "Debug",
-                "${workspaceFolder}/no-air-control/no_air_control.csproj"
+                "${workspaceFolder}/noaircontrol/noaircontrol.csproj"
             ],
             "problemMatcher": "$msCompile"
         },

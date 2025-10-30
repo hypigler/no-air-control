@@ -35,7 +35,7 @@ public class NoAirControlSystem : ModSystem
     public override void StartClientSide(ICoreClientAPI api)
     {
         base.StartClientSide(api);
-        Logger.Notification("Hello from template mod client side: " + Lang.Get("no-air-control:hello"));
+        Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
     }
 
     public override void StartServerSide(ICoreServerAPI api)
@@ -43,7 +43,7 @@ public class NoAirControlSystem : ModSystem
         base.StartServerSide(api);
 
 
-        Logger.Notification("Hello from template mod server side: " + Lang.Get("no-air-control:hello"));
+        Logger.Notification("Hello from template mod server side: " + Lang.Get("noaircontrol:hello"));
         try
             {
                 // api.LoadModConfig<T> will save/load to the server's ModConfig folder
