@@ -14,18 +14,27 @@ public class AirControl
     public static bool Prefix(PModulePlayerInAir __instance, float dt, Entity entity, EntityPos pos, EntityControls controls)
     {
         EntityPlayer player = entity as EntityPlayer;
+        if (player == null)
+        {
+            return true;
+        }
         // 1. Handle Climbing: If climbing, allow the original method to run the base logic.
-        if (player == null || controls.IsClimbing)
+        if (controls.IsClimbing)
         {
             // By returning true, we execute the original method's 'if (controls.IsClimbing)' block 
             // and then allow it to exit cleanly via base.ApplyFreeFall().
             return true;
         }
         // 2. Modified Freefall Logic (Always use high strength/no drag)
-        
+
         // Replicate the original 'float strength' calculation
         // __instance.AirMovingStrength correctly accesses the property from the base PModuleInAir class.
-        float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * NoAirControlSystem.Config.AirControlStrength;
+        float configuredStrength = 1.0f;
+        if (NoAirControlSystem.Config.AirControlStrength != null)
+        {
+            configuredStrength = NoAirControlSystem.Config.AirControlStrength;
+        }
+        float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * configuredStrength;
 
         // 3. Apply the movement vector using the calculated strength (which is always the high strength)
         pos.Motion.Add(

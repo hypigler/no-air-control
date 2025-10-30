@@ -36,11 +36,6 @@ public class NoAirControlSystem : ModSystem
     {
         base.StartClientSide(api);
         // Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
-    }
-
-    public override void StartServerSide(ICoreServerAPI api)
-    {
-        base.StartServerSide(api);
 
         try
             {
@@ -52,16 +47,38 @@ public class NoAirControlSystem : ModSystem
                     api.StoreModConfig(Config, "NoAirControl.json");
                 }
             }
-            catch (System.Exception e)
-            {
-                api.Logger.Error($"[AirControlMod] Failed to load server config: {e.Message}");
-                Config = new ModConfig(); 
-            }
+        catch (System.Exception e)
+        {
+            api.Logger.Error($"[AirControlMod] Failed to load client config: {e.Message}");
+            Config = new ModConfig(); 
+        }
             
-            api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {Config.AirControlStrength}");
+        api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {Config.AirControlStrength}");
+    }
+
+    public override void StartServerSide(ICoreServerAPI api)
+    {
+        base.StartServerSide(api);
+
+        try
+        {
+            // api.LoadModConfig<T> will save/load to the server's ModConfig folder
+            Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
+            if (Config == null)
+            {
+                Config = new ModConfig();
+                api.StoreModConfig(Config, "NoAirControl.json");
+            }
+        }
+        catch (System.Exception e)
+        {
+            api.Logger.Error($"[AirControlMod] Failed to load server config: {e.Message}");
+            Config = new ModConfig();
         }
 
-    
+        api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {Config.AirControlStrength}");
+        }
+
     public override void Dispose()
     {
         HarmonyInstance?.UnpatchAll(ModId);
