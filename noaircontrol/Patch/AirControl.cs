@@ -11,16 +11,16 @@ public class AirControl
 {
     // Required Harmony argument injections to access instance data and method parameters.
     [HarmonyPrefix]
-    public static bool Prefix(PModulePlayerInAir __instance, float dt, Entity entity, EntityPos pos, EntityControls controls) 
+    public static bool Prefix(PModulePlayerInAir __instance, float dt, Entity entity, EntityPos pos, EntityControls controls)
     {
+        EntityPlayer player = entity as EntityPlayer;
         // 1. Handle Climbing: If climbing, allow the original method to run the base logic.
-        if (controls.IsClimbing)
+        if (player == null || controls.IsClimbing)
         {
             // By returning true, we execute the original method's 'if (controls.IsClimbing)' block 
             // and then allow it to exit cleanly via base.ApplyFreeFall().
             return true;
         }
-
         // 2. Modified Freefall Logic (Always use high strength/no drag)
         
         // Replicate the original 'float strength' calculation
