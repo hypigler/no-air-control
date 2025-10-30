@@ -34,10 +34,6 @@ public class AirControl
         {
             configuredStrength = NoAirControlSystem.Config.AirControlStrength;
         }
-        else
-        {
-            configuredStrength = airControlStrength;
-        }
         float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * configuredStrength;
 
         // 3. Apply the movement vector using the calculated strength (which is always the high strength)

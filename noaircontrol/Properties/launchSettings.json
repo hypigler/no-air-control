@@ -11,6 +11,12 @@
       "executablePath": "dotnet",
       "commandLineArgs": "\"/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory/VintagestoryServer.dll\" --tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"",
       "workingDirectory": "/mnt/3f110873-82ed-4aea-b55a-b244ec75ba3e/vintagestory"
+    },
+    "Client-Laptop": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "\"/home/oinker/vintagestory//Vintagestory.dll\" --tracelog --addModPath \"$(ProjectDir)/bin/$(Configuration)/Mods\"",
+      "workingDirectory": "/home/oinker/vintagestory/"
     }
   }
 }

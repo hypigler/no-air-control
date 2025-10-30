@@ -19,7 +19,7 @@
             "args": [
                 "--tracelog",
                 "--addModPath",
-                "${workspaceFolder}/no_air_control/bin/Debug/Mods"
+                "${workspaceFolder}/noaircontrol/bin/Debug/Mods"
             ],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -39,7 +39,7 @@
             "args": [
                 "--tracelog",
                 "--addModPath",
-                "${workspaceFolder}/no_air_control/bin/Debug/Mods"
+                "${workspaceFolder}/noaircontrol/bin/Debug/Mods"
             ],
             "console": "internalConsole",
             "stopAtEntry": false

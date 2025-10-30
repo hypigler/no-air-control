@@ -6,6 +6,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Common;
 using System.Security.Cryptography.X509Certificates;
 using System.Dynamic;
+using Vintagestory.Server;
 
 namespace no_air_control;
 public class NoAirControlSystem : ModSystem
@@ -55,9 +56,9 @@ public class NoAirControlSystem : ModSystem
             api.Logger.Error($"[AirControlMod] Failed to load client config: {e.Message}");
             Config = new ModConfig();
         }
-        
+
         // Then try to load from server
-        airControlStrength = api.World.Config.GetFloat("AirControlStrength", 0);
+        float value = api.World.Config.GetFloat("AirControlStrength", 0);
         api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {Config.AirControlStrength}");
     }
 
@@ -82,7 +83,7 @@ public class NoAirControlSystem : ModSystem
         }
 
         // Sets to World Config for client access
-        api.World.Config.SetFloat("airControlStrength", Config.airControlStrength);
+        api.World.Config.SetFloat("AirControlStrength", ServerConfig.AirControlStrength);
 
         api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {Config.AirControlStrength}");
         }
