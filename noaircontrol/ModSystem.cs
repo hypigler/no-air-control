@@ -27,23 +27,20 @@ public class NoAirControlSystem : ModSystem
     public override void Start(ICoreAPI api)
     {
         base.Start(api);
-        Logger.Notification("Hello from template mod: " + api.Side);
-        Logger.StoryEvent("Loading"); // Sample story event (shown when loading a world)
-        Logger.Event("Templates loaded..."); // Sample event (shown when loading in dev mode or in logs)
+        // Logger.Notification("Hello from template mod: " + api.Side);
+        // Logger.StoryEvent("Loading"); // Sample story event (shown when loading a world)
+        // Logger.Event("Templates loaded..."); // Sample event (shown when loading in dev mode or in logs)
     }
     
     public override void StartClientSide(ICoreClientAPI api)
     {
         base.StartClientSide(api);
-        Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
         base.StartServerSide(api);
 
-
-        Logger.Notification("Hello from template mod server side: " + Lang.Get("noaircontrol:hello"));
         try
             {
                 // api.LoadModConfig<T> will save/load to the server's ModConfig folder
