@@ -35,6 +35,7 @@ public class NoAirControlSystem : ModSystem
     public override void StartClientSide(ICoreClientAPI api)
     {
         base.StartClientSide(api);
+        // Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
     }
 
     public override void StartServerSide(ICoreServerAPI api)
