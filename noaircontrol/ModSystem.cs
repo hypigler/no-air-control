@@ -4,6 +4,8 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.API.Config;
 using Vintagestory.API.Common;
+using System.Security.Cryptography.X509Certificates;
+using System.Dynamic;
 
 namespace no_air_control;
 public class NoAirControlSystem : ModSystem
@@ -37,22 +39,25 @@ public class NoAirControlSystem : ModSystem
         base.StartClientSide(api);
         // Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
 
+        // Try to load clientconfig first.
         try
+        {
+            // api.LoadModConfig<T> will save/load to the server's ModConfig folder
+            Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
+            if (Config == null)
             {
-                // api.LoadModConfig<T> will save/load to the server's ModConfig folder
-                Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
-                if (Config == null)
-                {
-                    Config = new ModConfig();
-                    api.StoreModConfig(Config, "NoAirControl.json");
-                }
+                Config = new ModConfig();
+                api.StoreModConfig(Config, "NoAirControl.json");
             }
+        }
         catch (System.Exception e)
         {
             api.Logger.Error($"[AirControlMod] Failed to load client config: {e.Message}");
-            Config = new ModConfig(); 
+            Config = new ModConfig();
         }
-            
+        
+        // Then try to load from server
+        airControlStrength = api.World.Config.GetFloat("AirControlStrength", 0);
         api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {Config.AirControlStrength}");
     }
 
@@ -75,6 +80,9 @@ public class NoAirControlSystem : ModSystem
             api.Logger.Error($"[AirControlMod] Failed to load server config: {e.Message}");
             Config = new ModConfig();
         }
+
+        // Sets to World Config for client access
+        api.World.Config.SetFloat("airControlStrength", Config.airControlStrength);
 
         api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {Config.AirControlStrength}");
         }
