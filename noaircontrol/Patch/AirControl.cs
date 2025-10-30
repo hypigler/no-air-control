@@ -36,7 +36,7 @@ public class AirControl
         }
         else
         {
-            configuredStrength = 
+            configuredStrength = airControlStrength;
         }
         float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * configuredStrength;
 
