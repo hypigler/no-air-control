@@ -7,6 +7,8 @@ using Vintagestory.API.Common;
 using System.Security.Cryptography.X509Certificates;
 using System.Dynamic;
 using Vintagestory.Server;
+using System.Threading;
+using System;
 
 namespace no_air_control;
 public class NoAirControlSystem : ModSystem
@@ -36,32 +38,17 @@ public class NoAirControlSystem : ModSystem
         // Logger.StoryEvent("Loading"); // Sample story event (shown when loading a world)
         // Logger.Event("Templates loaded..."); // Sample event (shown when loading in dev mode or in logs)
     }
-    
+
     public override void StartClientSide(ICoreClientAPI api)
     {
         base.StartClientSide(api);
-        // Logger.Notification("Hello from template mod client side: " + Lang.Get("noaircontrol:hello"));
 
-        // Try to load clientconfig first.
-        try
-        {
-            // api.LoadModConfig<T> will save/load to the server's ModConfig folder
-            ClientConfig = api.LoadModConfig<ModConfig>("NoAirControl.json");
-            if (ClientConfig == null)
-            {
-                ClientConfig = new ModConfig();
-                api.StoreModConfig(ClientConfig, "NoAirControl.json");
-            }
-        }
-        catch (System.Exception e)
-        {
-            api.Logger.Error($"[AirControlMod] Failed to load client config: {e.Message}");
-            ClientConfig = new ModConfig();
-        }
+        api.Event.IsPlayerReady += OnPlayerReady;
+    }
 
-        // Then try to load from server
-        float ACS = api.World.Config.GetFloat("ACS", 1.0f);
-        api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {ClientConfig.AirControlStrength}");
+    public static bool OnPlayerReady(ref EnumHandling handling) {
+        ACS = Api.World.Config.GetFloat("ACS");
+        return true;
     }
 
     public override void StartServerSide(ICoreServerAPI api)

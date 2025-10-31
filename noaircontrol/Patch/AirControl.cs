@@ -4,6 +4,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using no_air_control;
+using Vintagestory.API.Client;
 
 // We are patching the ApplyFreeFall method.
 [HarmonyPatch(typeof(PModulePlayerInAir), "ApplyFreeFall")] 
@@ -30,10 +31,6 @@ public class AirControl
         // Replicate the original 'float strength' calculation
         // __instance.AirMovingStrength correctly accesses the property from the base PModuleInAir class.
         float configuredStrength = NoAirControlSystem.ACS;
-        // if (NoAirControlSystem.Config.AirControlStrength != null)
-        // {
-        //     configuredStrength = NoAirControlSystem.Config.AirControlStrength;
-        // }
         float strength = __instance.AirMovingStrength * Math.Min(1, ((EntityPlayer)entity).walkSpeed) * dt * 60 * configuredStrength;
 
         // 3. Apply the movement vector using the calculated strength (which is always the high strength)
