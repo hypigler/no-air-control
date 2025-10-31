@@ -15,7 +15,9 @@ public class NoAirControlSystem : ModSystem
     public static string ModId { get; private set; }
     public static ICoreAPI Api { get; private set; }
     public static Harmony HarmonyInstance { get; private set; }
-    public static ModConfig Config { get; private set; }
+    public static ModConfig ClientConfig { get; private set; }
+    public static ModConfig ServerConfig { get; private set; }
+    public static float ACS { get; private set; }
 
     public override void StartPre(ICoreAPI api)
     {
@@ -44,22 +46,22 @@ public class NoAirControlSystem : ModSystem
         try
         {
             // api.LoadModConfig<T> will save/load to the server's ModConfig folder
-            Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
-            if (Config == null)
+            ClientConfig = api.LoadModConfig<ModConfig>("NoAirControl.json");
+            if (ClientConfig == null)
             {
-                Config = new ModConfig();
-                api.StoreModConfig(Config, "NoAirControl.json");
+                ClientConfig = new ModConfig();
+                api.StoreModConfig(ClientConfig, "NoAirControl.json");
             }
         }
         catch (System.Exception e)
         {
             api.Logger.Error($"[AirControlMod] Failed to load client config: {e.Message}");
-            Config = new ModConfig();
+            ClientConfig = new ModConfig();
         }
 
         // Then try to load from server
-        float value = api.World.Config.GetFloat("AirControlStrength", 0);
-        api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {Config.AirControlStrength}");
+        float ACS = api.World.Config.GetFloat("ACS", 1.0f);
+        api.Logger.Notification($"[AirControlMod] Client-side Air Control Strength: {ClientConfig.AirControlStrength}");
     }
 
     public override void StartServerSide(ICoreServerAPI api)
@@ -69,23 +71,23 @@ public class NoAirControlSystem : ModSystem
         try
         {
             // api.LoadModConfig<T> will save/load to the server's ModConfig folder
-            Config = api.LoadModConfig<ModConfig>("NoAirControl.json");
-            if (Config == null)
+            ServerConfig = api.LoadModConfig<ModConfig>("NoAirControl.json");
+            if (ServerConfig == null)
             {
-                Config = new ModConfig();
-                api.StoreModConfig(Config, "NoAirControl.json");
+                ServerConfig = new ModConfig();
+                api.StoreModConfig(ServerConfig, "NoAirControl.json");
             }
         }
         catch (System.Exception e)
         {
             api.Logger.Error($"[AirControlMod] Failed to load server config: {e.Message}");
-            Config = new ModConfig();
+            ServerConfig = new ModConfig();
         }
 
         // Sets to World Config for client access
-        api.World.Config.SetFloat("AirControlStrength", ServerConfig.AirControlStrength);
+        api.World.Config.SetFloat("ACS", ServerConfig.AirControlStrength);
 
-        api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {Config.AirControlStrength}");
+        api.Logger.Notification($"[AirControlMod] Server-side Air Control Strength: {ServerConfig.AirControlStrength}");
         }
 
     public override void Dispose()
